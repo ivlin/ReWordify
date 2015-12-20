@@ -1,6 +1,8 @@
 # ReWordify
 
-ReWordify is a chrome extension that reads and simplifies text from the web page you are reading. It will reword the text to improve user comprhension of difficult passages.
+Ever have trouble reading articles with hard words? How about trying to sound smart? No need to worry; we have the solution. Introducing Rewordify!  Rewordify will help u with your word dilemmas.
+No longer will you sound <strike>dumb</strike> inarticulate, no <stirke>articles</strike> treatise will ever be <strike>too hard to read</strike> hieroglyphic. Rewordify!
+
 
 #Members
 <table>
