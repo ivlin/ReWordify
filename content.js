@@ -1,9 +1,10 @@
 //this js is injected into the content
 
 var test = function test(){
-    document.getElementById("testid").innerHTML = "COMPLETE";
+    document.getElementById("test").innerHTML = "DONE";
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    sendResponse();
+    test();
+    sendResponse({"message":"WELL ELLO MATE"});
 });

@@ -3,20 +3,15 @@
     "name": "ReWordify",
     "version": "1.0",
 
-    "default_locale": "en",
-    "description": "Rewordify will help you with your word dilemmas"
-
-    "background": {
-	"persistent": false
-    },
+    "description": "Rewordify will help you with your word dilemmas",
 
     "content_scripts": [{
-	"matches":"http://*/*",
+	"matches":["http://*/*","file://*/*],
 	"js": ["reword.js"]
     }],
     
     "browser_action": {
 	"default_popup": "popup.html",
 	"default_title": "ReWordify"
-    },
+    }
 }
