@@ -5,6 +5,7 @@ var test = function test(){
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    console.log("A");
     test();
     sendResponse({"message":"WELL ELLO MATE"});
 });
