@@ -1,0 +1,45 @@
+/*
+
+*/
+
+
+//there's probably a better way to do this
+//codeInjected is a list of all the ids of tabs which the content page has been injected to
+var codeInjected = [];
+
+var simplify = function simplify(){
+    //gets the current tab and sends a json object to the content script
+    chrome.tabs.query({active:true, currentWindow:true},function(tab){
+	chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"}, function(response){
+	});
+    });
+};
+
+var complicate = function complicate(){
+    //gets the current tab and sends a json object to the content script
+    chrome.tabs.query({active:true, currentWindow:true},function(tab){
+	chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"}, function(response){
+	});
+    });
+};
+
+chrome.browserAction.onClicked.addListener(function(tab){
+    /*
+      every time the extension button is clicked, it will try to inject the content script (content.js)
+      it checks if the code has already been injected first
+     */
+    if (codeInjected.indexOf(tab.id) == -1){
+	chrome.tabs.executeScript(tab.id, {file:"content.js"});
+	codeInjected.push(tab.id);
+    }
+});
+/*
+
+chrome.browserAction.onClicked.addListener(function(tab){
+    chrome.tabs.executeScript(tab.id, {file:"content.js"});
+    chrome.tabs.sendMessage(tab.id, {}, function(response){
+	document.getElementById("test").innerHTML = response.message;
+    });
+});
+
+*/

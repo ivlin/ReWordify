@@ -6,10 +6,9 @@
     "description": "Rewordify will help you with your word dilemmas",
 
     "background": {
-	"scripts": ["reword.js"],
+	"scripts": ["background.js"],
 	"persistent": false
     },
-
     
     "content_scripts": [{
     	"matches":["http://*/*","file:///*"],
@@ -17,6 +16,7 @@
      }],
     
     "browser_action": {
+	"default_popup": "popup.html",
 	"default_title": "ReWordify"
     },
 
