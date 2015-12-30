@@ -3,20 +3,19 @@
 */
 
 var simplify = function simplify(){
-    document.getElementById("test").innerHTML = "SIMPLE";
+    document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
 }
 
 var complicate = function complicate(){
-    document.getElementById("test").innerHTML = "HARD";
+    document.getElementsByTagName("title")[0].innerHTML = "COMPLEX";
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     /*
       Listens for a message from the background page (background.js)
-      Request is the message. It can be of any type.
-      Currently, request is a JSON object where mode is a string containing simplify or complicate.
+      Request is the message. Request is a JSON object where mode is a string containing simplify or complicate.
     */
-    switch (request.mode){
+    switch(request.mode){
     case "simplify":
 	simplify();
 	break;
@@ -26,5 +25,4 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     default:
 	break;
     }
-    sendResponse();//optional - returns a value of any data type to the call in the background page
 });

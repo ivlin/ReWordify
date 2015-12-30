@@ -3,11 +3,17 @@
 */
 
 var sendInstructions = function sendInstructions(){
-    if (document.getElementById("simplify")){
-	chrome.extension.getBackgroundPage().simplify();
+    if (document.getElementById("simplify").checked){
+	chrome.tabs.query({active:true, currentWindow:true},function(tab){
+	    chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"}, function(response){
+	    });
+	});
     }
     if (document.getElementById("complicate").checked){
-	chrome.extension.getBackgroundPage().complicate();
+	chrome.tabs.query({active:true, currentWindow:true},function(tab){
+	    chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"}, function(response){
+	    });
+	});
     }
 };
 
