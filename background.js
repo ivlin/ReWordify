@@ -10,17 +10,26 @@ var codeInjected = [];
 
 var simplify = function simplify(){
     //gets the current tab and sends a json object to the content script
-    chrome.tabs.query({active:true, currentWindow:true},function(tab){
-	chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"}, function(response){
-	});
+    console.log("HEEEEEEEEEEEEEEEEEEEE");
+    getActiveTab().then(function(tab){
+	console.log("HWACHAH");
+	chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"});
     });
 };
 
 var complicate = function complicate(){
     //gets the current tab and sends a json object to the content script
-    chrome.tabs.query({active:true, currentWindow:true},function(tab){
-	chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"}, function(response){
-	});
+    getActiveTab().then(function(tab){
+	chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"});
+    });
+};
+
+var getActiveTab = function getActiveTab(){
+    return new Promise(function(resolve,reject){	
+	chrome.tabs.query({active:true,currentWindow:true},
+			  function(tab){
+			      resolve(tab);
+			  });
     });
 };
 

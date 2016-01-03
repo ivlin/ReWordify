@@ -21,6 +21,6 @@
     },
 
     "permissions": [
-	"contextMenus","tabs","activeTab","*://*/*"
+	"contextMenus","tabs","activeTab","*://*/*","background"
     ]
 }

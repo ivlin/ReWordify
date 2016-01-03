@@ -3,11 +3,15 @@
 */
 
 var sendInstructions = function sendInstructions(){
-    if (document.getElementById("simplify")){
-	chrome.extension.getBackgroundPage().simplify();
+    if (document.getElementById("simplify").checked){
+	chrome.runtime.getBackgroundPage(function(page){
+	    page.simplify();
+	});
     }
     if (document.getElementById("complicate").checked){
-	chrome.extension.getBackgroundPage().complicate();
+	chrome.runtime.getBackgroundPage(function(page){
+	    page.complicate();
+	});
     }
 };
 
