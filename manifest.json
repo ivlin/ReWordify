@@ -5,11 +5,6 @@
 
     "description": "Rewordify will help you with your word dilemmas",
 
-    "content_scripts": [{
-    	"matches":["http://*/*", "https://*/*"],
-    	"js": ["content.js"]
-    }],
-
     "browser_action": {
 	"default_popup": "popup.html",
 	"default_title": "ReWordify"
