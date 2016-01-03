@@ -10,9 +10,7 @@ var codeInjected = [];
 
 var simplify = function simplify(){
     //gets the current tab and sends a json object to the content script
-    console.log("HEEEEEEEEEEEEEEEEEEEE");
     getActiveTab().then(function(tab){
-	console.log("HWACHAH");
 	chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"});
     });
 };
