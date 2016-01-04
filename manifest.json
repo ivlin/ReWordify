@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "ReWordify",
+    "version": "1.0",
+
+    "description": "Rewordify will help you with your word dilemmas",
+
+    "background": {
+	"scripts": ["background.js"],
+	"persistent": false
+    },
+    
+    "content_scripts": [{
+    	"matches":["http://*/*","file:///*"],
+    	"js": ["content.js"]
+     }],
+    
+    "browser_action": {
+	"default_popup": "popup.html",
+	"default_title": "ReWordify"
+    },
+
+    "permissions": [
+	"contextMenus","tabs","activeTab","*://*/*","background"
+    ]
+}
