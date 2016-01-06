@@ -7,15 +7,21 @@
     }
     window.injected = true;
     
-    var title = document.getElementsByTagName("title")[0].innerHTML;
-    
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
-    }
+    };
 
     var complicate = function complicate(){
 	document.getElementsByTagName("title")[0].innerHTML = "HARD";
-    }
+    };
+
+    var parseHTML = function parseHTML(){
+	var keywords;
+	var paragraphs = document.getElementsByTagName("p");
+	for (paragraph in paragraphs){
+	    
+	}
+    };
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	/*
