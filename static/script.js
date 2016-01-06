@@ -18,9 +18,8 @@ var getsyn = function(word){
 	    verb = synonyms.verb.syn;
 	}
     });
-}
+};
 
 var checkdefined = function(array){
     return array != undefined;
-}
-
+};
