@@ -23,13 +23,10 @@
 	}
     };
 
-    //credit to https://github.com/panicsteve/cloud-to-butt/blob/master/Source/content_script.js
-	//the cloud-to-butt extension
+    //credit to http://is.gd/mwZp7E
+	//TJ Crowder at StackOverflow
 
-    function walk(node) 
-{
-	// I stole this function from here:
-	// http://is.gd/mwZp7E
+    var walk = function walk(node) {
 	
 	var child, next;
 
@@ -39,19 +36,44 @@
 		case 9:  // Document
 		case 11: // Document fragment
 			child = node.firstChild;
-			while ( child ) 
-			{
+			while ( child ) {
 				next = child.nextSibling;
 				walk(child);
 				child = next;
 			}
 			break;
 
-		case 3: // Text node
-			handleText(node);
+	    case 3: // Text node
+	                handleText(node);
 			break;
 	}
-}
+    };
+
+
+
+    var handleText = function handleText(node){
+	var n = node.nodeValue;
+	var ref = generateReplacementDict();
+	n = replaceAll(n, ref);
+    };
+
+    /*
+      @name: replaceAll
+      @author: Ben McCormick of StackOverflow
+    */
+    function replaceAll(str,mapObj){
+	var re = new RegExp(Object.keys(mapObj).join("|"),"gi");
+
+	return str.replace(re, function(matched){
+            return mapObj[matched.toLowerCase()];
+	});
+    }
+
+    var generateReplacementDict = function generateReplacementDict(){
+	/* This will generate a dictionary where keys are the words to be replaced
+	 The value of each key is the word that will replace it*/
+	return {};
+    };
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	/*
