@@ -9,27 +9,22 @@
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
+	var ref = hardToSimple();
+	walk(document.body,ref);
     };
 
     var complicate = function complicate(){
 	document.getElementsByTagName("title")[0].innerHTML = "HARD";
-    };
-
-    var parseHTML = function parseHTML(){
-	var keywords;
-	var paragraphs = document.getElementsByTagName("p");
-	for (paragraph in paragraphs){
-	    
-	}
+	var ref = simpleToHard();
+	walk(document.body,ref);
     };
 
     //credit to http://is.gd/mwZp7E
 	//TJ Crowder at StackOverflow
 
-    var walk = function walk(node) {
-	
+    var walk = function walk(node,reference) {
 	var child, next;
-
+	
 	switch ( node.nodeType )  
 	{
 		case 1:  // Element
@@ -49,30 +44,36 @@
 	}
     };
 
-
-
     var handleText = function handleText(node){
 	var n = node.nodeValue;
-	var ref = generateReplacementDict();
+	var ref = hardToSimple();
+	
 	n = replaceAll(n, ref);
+	node.nodeValue = n;
     };
 
     /*
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    function replaceAll(str,mapObj){
-	var re = new RegExp(Object.keys(mapObj).join("|"),"gi");
+    var replaceAll = function replaceAll(str,mapObj){
+	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
 
 	return str.replace(re, function(matched){
-            return mapObj[matched.toLowerCase()];
+            return mapObj[matched];
 	});
-    }
+    };
 
-    var generateReplacementDict = function generateReplacementDict(){
+    var hardToSimple = function hardToSimple(){
 	/* This will generate a dictionary where keys are the words to be replaced
 	 The value of each key is the word that will replace it*/
-	return {};
+	return {"Sweet":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
+    };
+
+    var simpleToHard = function simpleToHard(){
+	/* This will generate a dictionary where keys are the words to be replaced
+	 The value of each key is the word that will replace it*/
+	return {"paradise":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
