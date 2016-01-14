@@ -1,5 +1,6 @@
 //The content script is injected into every page and is used to interact with the DOM.
 
+var freq_list;
 (function() {
     //Prevents the content script from being injected multiple times
     if(window.injected){
@@ -7,9 +8,23 @@
     }
     window.injected = true;
 
-    $.getJSON(chrome.extension.getURL("data.json"), function(data){
-	freq_list = data;
+    
+    $.ajax({
+	async: false,
+	datatype: 'json',
+	url: chrome.extension.getURL("data.json"),
+	type: 'GET',
+	success: function(data){
+	    freq_list = data;
+	}
     });
+    
+    console.log(freq_list);
+    
+    var checkhard = function(word){
+	return freq_list[word] < 1000;	
+    }
+
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
@@ -70,13 +85,13 @@
 
     var hardToSimple = function hardToSimple(){
 	/* This will generate a dictionary where keys are the words to be replaced
-	 The value of each key is the word that will replace it*/
+	   The value of each key is the word that will replace it*/
 	return {"Sweet":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
     var simpleToHard = function simpleToHard(){
 	/* This will generate a dictionary where keys are the words to be replaced
-	 The value of each key is the word that will replace it*/
+	   The value of each key is the word that will replace it*/
 	return {"paradise":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
