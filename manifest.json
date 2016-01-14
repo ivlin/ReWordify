@@ -17,5 +17,9 @@
     
     "permissions": [
 	"activeTab"
+    ],
+
+    "web_accessible_resources": [
+	"data.json"
     ]
 }

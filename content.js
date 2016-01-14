@@ -6,6 +6,10 @@
 	return;
     }
     window.injected = true;
+
+    $.getJSON(chrome.extension.getURL("data.json"), function(data){
+	freq_list = data;
+    });
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
@@ -20,30 +24,30 @@
     };
 
     //credit to http://is.gd/mwZp7E
-	//TJ Crowder at StackOverflow
+    //TJ Crowder at StackOverflow
 
-    var walk = function walk(node,reference) {
+    var walk = function walk(node, reference) {
 	var child, next;
 	
 	switch ( node.nodeType )  
 	{
-		case 1:  // Element
-		case 9:  // Document
-		case 11: // Document fragment
-			child = node.firstChild;
-			while ( child ) {
-				next = child.nextSibling;
-				walk(child);
-				child = next;
-			}
-			break;
+	    case 1:  // Element
+	    case 9:  // Document
+	    case 11: // Document fragment
+	    child = node.firstChild;
+	    while ( child ) {
+		next = child.nextSibling;
+		walk(child);
+		child = next;
+	    }
+	    break;
 
 	    case 3: // Text node
-	                handleText(node);
-			break;
+	    handleText(node);
+	    break;
 	}
     };
-
+    
     var handleText = function handleText(node){
 	var n = node.nodeValue;
 	var ref = hardToSimple();
@@ -56,7 +60,7 @@
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var replaceAll = function replaceAll(str,mapObj){
+    var replaceAll = function replaceAll(str, mapObj){
 	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
 
 	return str.replace(re, function(matched){
