@@ -6,6 +6,24 @@
 	return;
     }
     window.injected = true;
+
+    var freq_list;
+    
+    $.ajax({
+	async: false,
+	datatype: 'json',
+	url: chrome.extension.getURL("data.json"),
+	type: 'GET',
+	success: function(data){
+	    freq_list = JSON.parse(data);
+	}
+    });
+
+    //console.log(freq_list);
+
+    var checkhard = function(word){
+	return freq_list[word] < 1000;	
+    }
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
@@ -20,30 +38,30 @@
     };
 
     //credit to http://is.gd/mwZp7E
-	//TJ Crowder at StackOverflow
+    //TJ Crowder at StackOverflow
 
-    var walk = function walk(node,reference) {
+    var walk = function walk(node, reference) {
 	var child, next;
 	
 	switch ( node.nodeType )  
 	{
-		case 1:  // Element
-		case 9:  // Document
-		case 11: // Document fragment
-			child = node.firstChild;
-			while ( child ) {
-				next = child.nextSibling;
-				walk(child);
-				child = next;
-			}
-			break;
+	    case 1:  // Element
+	    case 9:  // Document
+	    case 11: // Document fragment
+	    child = node.firstChild;
+	    while ( child ) {
+		next = child.nextSibling;
+		walk(child);
+		child = next;
+	    }
+	    break;
 
 	    case 3: // Text node
-	                handleText(node);
-			break;
+	    handleText(node);
+	    break;
 	}
     };
-
+    
     var handleText = function handleText(node){
 	var n = node.nodeValue;
 	var ref = hardToSimple();
@@ -56,7 +74,7 @@
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var replaceAll = function replaceAll(str,mapObj){
+    var replaceAll = function replaceAll(str, mapObj){
 	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
 
 	return str.replace(re, function(matched){
@@ -66,13 +84,13 @@
 
     var hardToSimple = function hardToSimple(){
 	/* This will generate a dictionary where keys are the words to be replaced
-	 The value of each key is the word that will replace it*/
+	   The value of each key is the word that will replace it*/
 	return {"Sweet":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
     var simpleToHard = function simpleToHard(){
 	/* This will generate a dictionary where keys are the words to be replaced
-	 The value of each key is the word that will replace it*/
+	   The value of each key is the word that will replace it*/
 	return {"paradise":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
