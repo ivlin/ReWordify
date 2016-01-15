@@ -19,13 +19,11 @@
 	}
     });
 
-    console.log(freq_list);
+    //console.log(freq_list);
+
     var checkhard = function(word){
 	return freq_list[word] < 1000;	
     }
-
-    console.log(checkhard("woods"));
-    console.log(checkhard("lancs"));
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
