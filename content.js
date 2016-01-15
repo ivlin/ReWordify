@@ -1,6 +1,5 @@
 //The content script is injected into every page and is used to interact with the DOM.
 
-var freq_list;
 (function() {
     //Prevents the content script from being injected multiple times
     if(window.injected){
@@ -8,6 +7,7 @@ var freq_list;
     }
     window.injected = true;
 
+    var freq_list;
     
     $.ajax({
 	async: false,
@@ -15,16 +15,17 @@ var freq_list;
 	url: chrome.extension.getURL("data.json"),
 	type: 'GET',
 	success: function(data){
-	    freq_list = data;
+	    freq_list = JSON.parse(data);
 	}
     });
-    
+
     console.log(freq_list);
-    
     var checkhard = function(word){
 	return freq_list[word] < 1000;	
     }
 
+    console.log(checkhard("woods"));
+    console.log(checkhard("lancs"));
     
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
