@@ -11,11 +11,17 @@
 	"default_icon": "icon.png"
     },
 
+    "background": {
+	"scripts": ["eventPage.js"],
+	"persistent": false
+    },
+
     "icons": {
+	"16": "icon.png",
 	"128": "icon.png"
     },
     
     "permissions": [
-	"activeTab"
+	"activeTab", "contextMenus"
     ]
 }

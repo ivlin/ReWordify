@@ -20,7 +20,7 @@
     };
 
     //credit to http://is.gd/mwZp7E
-	//TJ Crowder at StackOverflow
+    //TJ Crowder at StackOverflow
 
     var walk = function walk(node,reference) {
 	var child, next;
@@ -37,7 +37,6 @@
 				child = next;
 			}
 			break;
-
 	    case 3: // Text node
 	                handleText(node);
 			break;
@@ -46,12 +45,11 @@
 
     var handleText = function handleText(node){
 	var n = node.nodeValue;
-	var ref = hardToSimple();
-	
+	var ref = hardToSimple();	
 	n = replaceAll(n, ref);
 	node.nodeValue = n;
     };
-
+    
     /*
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
@@ -73,7 +71,15 @@
     var simpleToHard = function simpleToHard(){
 	/* This will generate a dictionary where keys are the words to be replaced
 	 The value of each key is the word that will replace it*/
-	return {"paradise":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
+	return {"Just":"well"};
+    };
+
+    var replaceSelection = function replaceSelection(){
+	var selection = window.getSelection();
+	var parent = selection.anchorNode;
+	var val = parent.nodeValue;
+	val = val.replace(selection,"chickn");
+	parent.nodeValue = val;
     };
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
@@ -82,6 +88,7 @@
 	  Request is the message. It can be of any type.
 	  Currently, request is a JSON object where mode is a string containing simplify or complicate.
 	*/
+
 	switch (request.mode){
 	case "simplify":
 	    simplify();
@@ -93,4 +100,6 @@
 	    break;
 	}
     });
+
+    chrome.runtime.sendMessage({call:"createContextItem"});
 })();

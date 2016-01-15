@@ -1,7 +1,6 @@
 /*
   This is the javascript attached to the popup box that appears when the extension is clicked
 */
-
 chrome.tabs.executeScript(null, {file:"content.js"});
 
 var sendInstructions = function sendInstructions(){
@@ -22,6 +21,6 @@ var getActiveTab = function getActiveTab(){
 	    resolve(tab);
 	});
     });
-}
+};
 
 document.getElementById("submit").addEventListener("click", sendInstructions);
