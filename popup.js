@@ -1,16 +1,18 @@
 /*
   This is the javascript attached to the popup box that appears when the extension is clicked
 */
+
+chrome.tabs.executeScript(null, {file:"jquery.js"});
 chrome.tabs.executeScript(null, {file:"content.js"});
 
 var sendInstructions = function sendInstructions(){
     if(document.getElementById("simplify").checked){
 	getActiveTab().then(function(tab){
-	    chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"});
+	    chrome.tabs.sendMessage(tab[0].id, {scale:"page",mode:"simplify"});
 	});
     }else if(document.getElementById("complicate").checked){
 	getActiveTab().then(function(tab){
-	    chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"});
+	    chrome.tabs.sendMessage(tab[0].id, {scale:"page",mode:"complicate"});
 	});
     }
 };

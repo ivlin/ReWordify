@@ -6,47 +6,67 @@
 	return;
     }
     window.injected = true;
-    
-    var simplify = function simplify(){
-	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
-	var ref = hardToSimple();
-	walk(document.body,ref);
-    };
 
-    var complicate = function complicate(){
-	document.getElementsByTagName("title")[0].innerHTML = "HARD";
-	var ref = simpleToHard();
+    var freq_list;
+    
+    $.ajax({
+	async: false,
+	datatype: 'json',
+	url: chrome.extension.getURL("data.json"),
+	type: 'GET',
+	success: function(data){
+	    freq_list = JSON.parse(data);
+	}
+    });
+
+    //console.log(freq_list);
+
+    var checkhard = function(word){
+	return freq_list[word] < 1000;	
+    };
+    
+    var replaceAll = function replaceAll(mode){
+	var ref;
+	console.log(mode);
+	if (mode == "simplify"){
+	    document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
+	    ref = hardToSimple();
+	}
+	else if (mode == "complicate"){   
+	    document.getElementsByTagName("title")[0].innerHTML = "HARD";
+	    ref = simpleToHard();
+	}
 	walk(document.body,ref);
     };
 
     //credit to http://is.gd/mwZp7E
     //TJ Crowder at StackOverflow
 
-    var walk = function walk(node,reference) {
+    var walk = function walk(node, reference) {
 	var child, next;
 	
-	switch ( node.nodeType )  
-	{
-		case 1:  // Element
-		case 9:  // Document
-		case 11: // Document fragment
-			child = node.firstChild;
-			while ( child ) {
-				next = child.nextSibling;
-				walk(child);
-				child = next;
-			}
-			break;
-	    case 3: // Text node
-	                handleText(node);
-			break;
+	switch ( node.nodeType ) {
+	case 1:  // Element
+	case 9:  // Document
+	case 11: // Document fragment
+	    child = node.firstChild;
+	    while ( child ) {
+		next = child.nextSibling;
+		walk(child);
+		child = next;
+	    }
+	    break;
+	    
+	case 3: // Text node
+	    handleText(node);
+	    break;
 	}
     };
-
+    
     var handleText = function handleText(node){
 	var n = node.nodeValue;
 	var ref = hardToSimple();	
-	n = replaceAll(n, ref);
+	n = replaceMap(n, ref);
 	node.nodeValue = n;
     };
     
@@ -54,7 +74,7 @@
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var replaceAll = function replaceAll(str,mapObj){
+    var replaceMap = function replaceMap(str, mapObj){
 	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
 
 	return str.replace(re, function(matched){
@@ -64,21 +84,26 @@
 
     var hardToSimple = function hardToSimple(){
 	/* This will generate a dictionary where keys are the words to be replaced
-	 The value of each key is the word that will replace it*/
-	return {"Sweet":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
+	   The value of each key is the word that will replace it*/
+	return {"NOOBS":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
     var simpleToHard = function simpleToHard(){
 	/* This will generate a dictionary where keys are the words to be replaced
 	 The value of each key is the word that will replace it*/
-	return {"Just":"well"};
+	return {"GUI":"well"};
     };
 
-    var replaceSelection = function replaceSelection(){
+    var replaceSelection = function replaceSelection(mode){
 	var selection = window.getSelection();
 	var parent = selection.anchorNode;
 	var val = parent.nodeValue;
-	val = val.replace(selection,"chickn");
+	if (mode == "simplify"){
+	    val = val.replace(selection,"THIS IS FOR SIMPLETONS");
+	}
+	else if(mode == "complicate"){
+	    val = val.replace(selection,"THIS IS FOR INTEMELLECTUAL PPL");
+	}
 	parent.nodeValue = val;
     };
 
@@ -88,18 +113,11 @@
 	  Request is the message. It can be of any type.
 	  Currently, request is a JSON object where mode is a string containing simplify or complicate.
 	*/
-
-	switch (request.mode){
-	case "simplify":
-	    simplify();
-	    break;
-	case "complicate":
-	    complicate();
-	    break;
-	default:
-	    break;
+	if (request.scale == "page"){
+	    replaceAll(request.mode);
+	}
+	else if (request.scale == "selection"){
+	    replaceSelection(request.mode);
 	}
     });
-
-    chrome.runtime.sendMessage({call:"createContextItem"});
 })();
