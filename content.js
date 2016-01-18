@@ -6,138 +6,110 @@
 	return;
     }
     window.injected = true;
+
     //Thesaurus API stuff
     var api_key = "e4383d803d79b55ef72d1a68e85d075d";
-    var synonyms = new Array(50);
-    var adjective = new Array(50);
-    var noun = new Array(50);
-    var verb = new Array(50);
 
-    var getsyn = function(word){
-	console.log("Input: " + word);
-	$.getJSON("http://words.bighugelabs.com/api/2/" + api_key+"/" + word + "/json", function(data){
-	    synonyms = data;
-	    if(checkdefined(synonyms.adjective)){
-		adjective = synonyms.adjective.syn;
-	    }
-	    if(checkdefined(synonyms.noun)){
-		noun = synonyms.noun.syn;
-	    }
-	    if(checkdefined(synonyms.verb)){
-		verb = synonyms.verb.syn;
-	    }
-	});
-    };
-
-    var checkdefined = function(array){
-	return array != undefined;
-    };
     //ajax call to frequency table
-
-
     var freq_list;
-    
     $.ajax({
-	async: false,
 	datatype: 'json',
 	url: chrome.extension.getURL("data.json"),
 	type: 'GET',
 	success: function(data){
 	    freq_list = JSON.parse(data);
+	    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		/*
+		  Listens for a message from popup.js
+		  Request is the message. It can be of any type.
+		  Currently, request is a JSON object where mode is a string containing simplify or complicate.
+		*/
+		switch (request.mode){
+		case "simplify":
+		    simplify();
+		    break;
+		case "complicate":
+		    complicate();
+		    break;
+		}
+	    });
 	}
     });
-
-    //console.log(freq_list);
-
-    var checkhard = function(word){
-	return freq_list[word] < 1000;	
-    }
     
     var simplify = function simplify(){
-	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
-	var ref = hardToSimple();
-	walk(document.body,ref);
+	walk(document.body, true);
     };
 
     var complicate = function complicate(){
-	document.getElementsByTagName("title")[0].innerHTML = "HARD";
-	var ref = simpleToHard();
-	walk(document.body,ref);
+	walk(document.body, false);
     };
 
     //credit to http://is.gd/mwZp7E
     //TJ Crowder at StackOverflow
-
     var walk = function walk(node, reference) {
 	var child, next;
 	
-	switch ( node.nodeType )  
-	{
-	    case 1:  // Element
-	    case 9:  // Document
-	    case 11: // Document fragment
+	switch (node.nodeType){
+	case 1:  // Element
+	case 9:  // Document
+	case 11: // Document fragment
 	    child = node.firstChild;
-	    while ( child ) {
+	    while(child){
 		next = child.nextSibling;
 		walk(child);
 		child = next;
 	    }
 	    break;
-
-	    case 3: // Text node
+	    
+	case 3: // Text node
 	    handleText(node);
 	    break;
 	}
     };
     
-    var handleText = function handleText(node){
-	var n = node.nodeValue;
-	var ref = hardToSimple();
-	
-	n = replaceAll(n, ref);
-	node.nodeValue = n;
+    var handleText = function handleText(node, simplify){
+	node.nodeValue = replaceAll(node.nodeValue, simplify);
     };
 
     /*
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var replaceAll = function replaceAll(str, mapObj){
+    var replaceAll = function replaceAll(str, simplify){
+	words = str.match(/[A-Z]?[a-z]+/g);
+	if(words == null){
+	    return str;
+	}
+	
+	var mapObj = {};
+
+	for(i = 0; i < words.length; i++){
+	    var word = words[i].toLowerCase();
+	    var found = false;
+	    var data;
+	    if(freq_list[word] == undefined || freq_list[word] < 1000){
+		$.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(thesaurus){
+		    thesaurusData = JSON.parse(thesaurus);
+		})
+		    .success(function(){
+			for(k = 0; !found && k < data.keys().length; k++){
+			    var synonyms = data[data.keys[k]]["syn"];
+			    for(s = 0; !found && k < synonyms.length; k++){
+				if(synonyms[s] != undefined && synonyms[s] > 1000){
+				    mapObject[word] = synonyms[s];
+				    found = true;
+				}
+			    }
+			}
+		    })
+		    .error(function(){})
+	    }
+	}
+
 	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
 
 	return str.replace(re, function(matched){
             return mapObj[matched];
 	});
     };
-
-    var hardToSimple = function hardToSimple(){
-	/* This will generate a dictionary where keys are the words to be replaced
-	   The value of each key is the word that will replace it*/
-	
-	return {"Sweet":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
-    };
-
-    var simpleToHard = function simpleToHard(){
-	/* This will generate a dictionary where keys are the words to be replaced
-	   The value of each key is the word that will replace it*/
-	return {"paradise":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
-    };
-
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-	/*
-	  Listens for a message from popup.js
-	  Request is the message. It can be of any type.
-	  Currently, request is a JSON object where mode is a string containing simplify or complicate.
-	*/
-	switch (request.mode){
-	case "simplify":
-	    simplify();
-	    break;
-	case "complicate":
-	    complicate();
-	    break;
-	default:
-	    break;
-	}
-    });
 })();
