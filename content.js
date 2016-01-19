@@ -80,36 +80,32 @@
 	if(words == null){
 	    return str;
 	}
-	
-	var mapObj = {};
 
+	var mapObj = {};
+	
 	for(i = 0; i < words.length; i++){
 	    var word = words[i].toLowerCase();
 	    var found = false;
 	    var data;
 	    if(freq_list[word] == undefined || freq_list[word] < 1000){
-		$.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(thesaurus){
-		    thesaurusData = JSON.parse(thesaurus);
-		})
-		    .success(function(){
-			for(k = 0; !found && k < data.keys().length; k++){
-			    var synonyms = data[data.keys[k]]["syn"];
-			    for(s = 0; !found && k < synonyms.length; k++){
-				if(synonyms[s] != undefined && synonyms[s] > 1000){
-				    mapObject[word] = synonyms[s];
-				    found = true;
-				}
+		$.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
+		    for(var key in data){
+			var synonyms = data[key]["syn"];
+			for(var syn in synonyms){
+			    if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 1000){
+				mapObj[word] = synonyms[syn];
+				found = true;
 			    }
 			}
-		    })
-		    .error(function(){})
+		    }
+		})
 	    }
 	}
 
-	var re = new RegExp(Object.keys(mapObj).join("|"),"g");
-
-	return str.replace(re, function(matched){
-            return mapObj[matched];
+	var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+	str = str.replace(re, function(matched){
+	    return mapObj[matched];
 	});
+	return str;
     };
 })();
