@@ -24,6 +24,10 @@
     var checkhard = function(word){
 	return freq_list[word] < 1000;	
     };
+
+    var checkeasy = function(word){
+	
+    };
     
     var replaceAll = function replaceAll(mode){
 	var ref;
@@ -82,10 +86,20 @@
 	});
     };
 
+    var reverseDictionary = function reverseDictionary(dict){
+	dict = hardToSimple();
+	var reverse = {};
+	for (var prop in dict){
+	    reverse[dict[prop]] = prop;
+	}
+	console.log(reverse);
+	return reverse;
+    };
+    
     var hardToSimple = function hardToSimple(){
 	/* This will generate a dictionary where keys are the words to be replaced
 	   The value of each key is the word that will replace it*/
-	return {"NOOBS":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
+	return {"properties":"HAAAAAAAAAAAAAAAAAAA","Just":"well"};
     };
 
     var simpleToHard = function simpleToHard(){
