@@ -28,10 +28,25 @@ var getActiveTab = function getActiveTab(){
 document.getElementById("submit").addEventListener("click", sendInstructions);
 */
 console.log("loaded");
-function updateLabel(val) {
+var UDL = function updateLabel(val) {
     console.log(val);
-    document.getElementById("sliderLabel").value=val;
+    var label = document.getElementById("sliderLabel");
+    if(val==0)
+	label.innerHTML = "Very Easy";
+    if(val==25)
+	label.innerHTML = "Easy";
+    if(val==50)
+	label.innerHTML = "Regular";
+    if(val==75)
+	label.innerHTML = "Hard";
+    if(val==100)
+	label.innerHTML = "Very Hard";
 }
 
-var slider = document.getElementById("submit");
-slider.addEventListener('click',console.log("works"));
+var slider = document.getElementById("slider");
+document.addEventListener('change', function(){
+    UDL(slider.value);
+});
+document.addEventListener('mousedown', function(){
+    UDL(slider.value);
+});
