@@ -2,10 +2,10 @@
   This is the javascript attached to the popup box that appears when the extension is clicked
 */
 
-chrome.tabs.executeScript(null, {file:"jquery.js"});
-chrome.tabs.executeScript(null, {file:"content.js"});
+//chrome.tabs.executeScript(null, {file:"jquery.js"});
+//chrome.tabs.executeScript(null, {file:"content.js"});
 
-var sendInstructions = function sendInstructions(){
+/*var sendInstructions = function sendInstructions(){
     if(document.getElementById("simplify").checked){
 	getActiveTab().then(function(tab){
 	    chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"});
@@ -26,3 +26,12 @@ var getActiveTab = function getActiveTab(){
 }
 
 document.getElementById("submit").addEventListener("click", sendInstructions);
+*/
+console.log("loaded");
+function updateLabel(val) {
+    console.log(val);
+    document.getElementById("sliderLabel").value=val;
+}
+
+var slider = document.getElementById("submit");
+slider.addEventListener('click',console.log("works"));
