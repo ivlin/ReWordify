@@ -26,24 +26,18 @@
 		*/
 		switch (request.mode){
 		case "simplify":
-		    simplify();
+		    walk(document.body, true);
 		    break;
 		case "complicate":
-		    complicate();
+		    walk(document.body, false);
 		    break;
 		}
 	    });
 	}
     });
+
+    var mapObj = {};
     
-    var simplify = function simplify(){
-	walk(document.body, true);
-    };
-
-    var complicate = function complicate(){
-	walk(document.body, false);
-    };
-
     //credit to http://is.gd/mwZp7E
     //TJ Crowder at StackOverflow
     var walk = function walk(node, reference) {
@@ -68,20 +62,26 @@
     };
     
     var handleText = function handleText(node, simplify){
-	node.nodeValue = replaceAll(node.nodeValue, simplify);
+	findSynonyms(node.nodeValue, simplify);
+	$(document).ajaxStop(function(){
+	    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+	    node.nodeValue = node.nodeValue.replace(re, function(matched){
+		return mapObj[matched];
+	    });
+	});
     };
 
     /*
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var replaceAll = function replaceAll(str, simplify){
+    var findSynonyms = function findSynonyms(str, simplify){
 	words = str.match(/[A-Z]?[a-z]+/g);
 	if(words == null){
 	    return str;
 	}
 
-	var mapObj = {};
+	mapObj = {};
 	
 	for(i = 0; i < words.length; i++){
 	    var word = words[i].toLowerCase();
@@ -101,11 +101,5 @@
 		})
 	    }
 	}
-
-	var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	str = str.replace(re, function(matched){
-	    return mapObj[matched];
-	});
-	return str;
     };
 })();
