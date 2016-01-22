@@ -50,3 +50,6 @@ document.addEventListener('change', function(){
 document.addEventListener('mousedown', function(){
     UDL(slider.value);
 });
+document.addEventListener('mousemove', function(){
+    UDL(slider.value);
+});
