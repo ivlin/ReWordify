@@ -40,7 +40,7 @@
     
     //credit to http://is.gd/mwZp7E
     //TJ Crowder at StackOverflow
-    var walk = function walk(node, reference) {
+    var walk = function walk(node, simplify) {
 	var child, next;
 	
 	switch (node.nodeType){
@@ -56,7 +56,7 @@
 	    break;
 	    
 	case 3: // Text node
-	    handleText(node);
+	    handleText(node, simplify);
 	    break;
 	}
     };
@@ -64,10 +64,13 @@
     var handleText = function handleText(node, simplify){
 	findSynonyms(node.nodeValue, simplify);
 	$(document).ajaxStop(function(){
-	    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	    node.nodeValue = node.nodeValue.replace(re, function(matched){
-		return mapObj[matched];
-	    });
+	    if(!$.isEmptyObject(mapObj)){
+		console.log(mapObj);
+		var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+		node.nodeValue = node.nodeValue.replace(re, function(matched){
+		    return mapObj[matched];
+		});
+	    }
 	});
     };
 
@@ -92,7 +95,7 @@
 		    for(var key in data){
 			var synonyms = data[key]["syn"];
 			for(var syn in synonyms){
-			    if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 1000){
+			    if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 0){
 				mapObj[word] = synonyms[syn];
 				found = true;
 			    }
