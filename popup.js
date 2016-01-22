@@ -2,8 +2,8 @@
   This is the javascript attached to the popup box that appears when the extension is clicked
 */
 
-//chrome.tabs.executeScript(null, {file:"jquery.js"});
-//chrome.tabs.executeScript(null, {file:"content.js"});
+chrome.tabs.executeScript(null, {file:"jquery.js"});
+chrome.tabs.executeScript(null, {file:"content.js"});
 
 /*var sendInstructions = function sendInstructions(){
     if(document.getElementById("simplify").checked){
