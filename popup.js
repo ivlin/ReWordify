@@ -22,7 +22,6 @@ var getActiveTab = function getActiveTab(){
 
 document.getElementById("submit").addEventListener("click", sendInstructions);
 
-console.log("loaded");
 
 var UDL = function updateLabel(val) {
     var label = document.getElementById("sliderLabel");
@@ -39,10 +38,7 @@ var UDL = function updateLabel(val) {
 }
 
 var slider = document.getElementById("slider");
-/*  
-slider.addEventListener('change', function(){
-    UDL(slider.value);
-});*/
+
 slider.addEventListener('mousedown', function(){
     UDL(slider.value);
 });
