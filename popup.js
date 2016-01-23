@@ -1,20 +1,15 @@
 /*
   This is the javascript attached to the popup box that appears when the extension is clicked
 */
-
+/*
 chrome.tabs.executeScript(null, {file:"jquery.js"});
 chrome.tabs.executeScript(null, {file:"content.js"});
-
-/*var sendInstructions = function sendInstructions(){
-    if(document.getElementById("simplify").checked){
+*/
+var sendInstructions = function sendInstructions(){
+    var slider = document.getElementById("slider");
 	getActiveTab().then(function(tab){
-	    chrome.tabs.sendMessage(tab[0].id, {mode:"simplify"});
+	    chrome.tabs.sendMessage(tab[0].id, {mode:slider.value});
 	});
-    }else if(document.getElementById("complicate").checked){
-	getActiveTab().then(function(tab){
-	    chrome.tabs.sendMessage(tab[0].id, {mode:"complicate"});
-	});
-    }
 };
 
 var getActiveTab = function getActiveTab(){
@@ -26,10 +21,10 @@ var getActiveTab = function getActiveTab(){
 }
 
 document.getElementById("submit").addEventListener("click", sendInstructions);
-*/
+
 console.log("loaded");
+
 var UDL = function updateLabel(val) {
-    console.log(val);
     var label = document.getElementById("sliderLabel");
     if(val==0)
 	label.innerHTML = "Very Easy";
@@ -44,12 +39,15 @@ var UDL = function updateLabel(val) {
 }
 
 var slider = document.getElementById("slider");
-document.addEventListener('change', function(){
+/*  
+slider.addEventListener('change', function(){
+    UDL(slider.value);
+});*/
+slider.addEventListener('mousedown', function(){
     UDL(slider.value);
 });
-document.addEventListener('mousedown', function(){
+slider.addEventListener('mousemove', function(){
     UDL(slider.value);
 });
-document.addEventListener('mousemove', function(){
-    UDL(slider.value);
-});
+
+var button = document.getElementById("submit");
