@@ -19,6 +19,16 @@
 	}
     });
 
+    $.ajax({
+	async: false,
+	datatype: 'json',
+	url: chrome.extension.getURL("data.json"),
+	type: 'GET',
+	success: function(data){
+	    freq_list = JSON.parse(data);
+	}
+    });
+
     //console.log(freq_list);
 
     var checkhard = function(word){
