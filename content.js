@@ -24,7 +24,7 @@
     var checkhard = function(word){
 	return freq_list[word] < 1000;	
     }
-    
+    /*
     var simplify = function simplify(){
 	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
 	var ref = hardToSimple();
@@ -35,7 +35,7 @@
 	document.getElementsByTagName("title")[0].innerHTML = "HARD";
 	var ref = simpleToHard();
 	walk(document.body,ref);
-    };
+    };*/
 
     //credit to http://is.gd/mwZp7E
     //TJ Crowder at StackOverflow
@@ -100,7 +100,7 @@
 	  Request is the message. It can be of any type.
 	  Currently, request is a JSON object where mode is a string containing simplify or complicate.
 	*/
-	switch (request.mode){
+	/*switch (request.mode){
 	case "simplify":
 	    simplify();
 	    break;
@@ -109,6 +109,7 @@
 	    break;
 	default:
 	    break;
-	}
+	}*/
+	console.log(request.mode);
     });
 })();
