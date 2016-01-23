@@ -12,30 +12,15 @@ $.ajax({
     }
 });
 
-var checkhard = function(word){
-    return freq_list[word] < 1000;	
-};
-
 var checkeasy = function(word){    
 };
 
-var replaceAll = function replaceAll(mode){
-    var ref;
-    console.log(mode);
-    if (mode == "simplify"){
-	document.getElementsByTagName("title")[0].innerHTML = "SIMPLE";
-	ref = hardToSimple();
-    }
-    else if (mode == "complicate"){   
-	document.getElementsByTagName("title")[0].innerHTML = "HARD";
-	ref = simpleToHard();
-    }
-    walk(document.body,ref);
-};
+var checkhard = function(word){
+    return freq_list[word] < 1000;	
+}
 
 //credit to http://is.gd/mwZp7E
 //TJ Crowder at StackOverflow
-
 var walk = function walk(node, reference) {
     var child, next;
     

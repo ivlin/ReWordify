@@ -33,6 +33,13 @@
 	"activeTab"
     ],
 
+    "content_scripts": [
+        {
+            "matches":["<all_urls>"],
+            "js":["jquery.js","content.js"]
+        }
+    ],
+
     "web_accessible_resources": [
 	"data.json"
     ]
