@@ -27,23 +27,17 @@ var replaceSelection = function replaceSelection(mode){
     var val = parent.nodeValue;
     if (mode == "simplify"){
 	findAllSynonyms(val, 0);
-	$(document).ajaxStop(function(){
-	    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	    val = val.replace(re, function(matched){
-		return mapObj[matched];
-	    });
-	});
     }
     else if(mode == "complicate"){
 	findAllSynonyms(val, 100);
-	$(document).ajaxStop(function(){
-	    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	    val = val.replace(re, function(matched){
-		return mapObj[matched];
-	    });
-	});
     }
-    parent.nodeValue = val;
+    $(document).ajaxStop(function(){
+	var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+	val = val.replace(re, function(matched){
+	    return mapObj[matched];
+	});
+	parent.nodeValue = val;
+    });
 };
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
