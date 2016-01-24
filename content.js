@@ -77,6 +77,7 @@ var result;
 var getSyn = function getSyn(word, p){
     /*takes a word and part of speech and returns a synonym corresponding to it*/
     str = word.toLowerCase();
+    result=word;
         $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
             if(data[p]==undefined){
                 console.log(p);
@@ -136,7 +137,7 @@ var getSyn = function getSyn(word, p){
                     }
                 } result = word;
             }
-        });
+        })
 
 }
 
