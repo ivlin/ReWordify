@@ -5,6 +5,7 @@
 var sendInstructions = function sendInstructions(){
     var slider = document.getElementById("slider");
 	getActiveTab().then(function(tab){
+        console.log("works2");
 	    chrome.tabs.sendMessage(tab[0].id, {mode:slider.value});
 	});
 };
@@ -17,9 +18,7 @@ var getActiveTab = function getActiveTab(){
     });
 };
 
-document.getElementById("submit").addEventListener("click", sendInstructions);
-
-console.log("loaded");
+var slider = document.getElementById("slider");
 
 var UDL = function updateLabel(val) {
     var label = document.getElementById("sliderLabel");
@@ -35,16 +34,17 @@ var UDL = function updateLabel(val) {
 	label.innerHTML = "Very Hard";
 }
 
-var slider = document.getElementById("slider");
-/*  
-slider.addEventListener('change', function(){
+slider.addEventListener('mouseup', function(){
     UDL(slider.value);
-});*/
+    sendInstructions();
+})
 slider.addEventListener('mousedown', function(){
     UDL(slider.value);
+    sendInstructions();
 });
 slider.addEventListener('mousemove', function(){
     UDL(slider.value);
+    sendInstructions();
 });
-
-var button = document.getElementById("submit");
+UDL(slider.value);
+sendInstructions();

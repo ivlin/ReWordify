@@ -1,13 +1,13 @@
 {
     "manifest_version": 2,
-    "name": "ReWordify",
+    "name": "ReWrite",
     "version": "1.0",
 
     "description": "Rewordify will help you with your word dilemmas",
 
     "browser_action": {
 	"default_popup": "popup.html",
-	"default_title": "ReWordify",	
+	"default_title": "ReWrite",	
 	"default_icon": "icon.png"
     },
 

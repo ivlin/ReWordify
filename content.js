@@ -53,9 +53,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 });
 
 //Thesaurus API stuff
-var api_key = "e4383d803d79b55ef72d1a68e85d075d";
+//var api_key = "e4383d803d79b55ef72d1a68e85d075d";
 
 var mapObj = {};
+
+//API key for Big Huge Thesaurus
+var api_key = "0d5eb6972f22a57bb1b4f4434c0f32a2";
 
 //credit to http://is.gd/mwZp7E
 //TJ Crowder at StackOverflow
@@ -99,6 +102,74 @@ var handleText = function handleText(node, difficulty){
 	}
     });
 };
+var diff;
+var result;
+var getSyn = function getSyn(word, p){
+    /*takes a word and part of speech and returns a synonym corresponding to it*/
+    str = word.toLowerCase();
+    if(freq_list[str] == undefined){
+        console.log(JSON.stringify(str));
+        console.log(freq_list[str]);
+        result = word;
+    }
+    else{
+        $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
+            if(data[p]==undefined){
+                //console.log(p);
+                result = word;
+            }
+            else{
+                //console.log("works");
+                var synonyms = data[p]["syn"];
+                for(var syn in synonyms){
+                    
+                    //console.log(synonyms[0]);
+                    var f = freq_list[synonyms[syn]];
+                    console.log(synonyms[syn]);
+                    console.log(f);
+                    console.log(diff);
+                    syn=synonyms[syn];
+                    console.log(word);
+                    if(f!=undefined){
+                        if (diff == 0){
+                            if(f>10000){
+                                result = syn;
+                                return;
+                            }
+                        }
+                        else if (diff == 25){
+                            if(f<=10000&&f>5000){
+                                result = syn;
+                                return;
+                            }
+                        }
+                        else if (diff == 50){
+                            console.log(f);
+                            console.log(syn);
+                            if(f<=5000&&f>1000){
+                                result = syn;
+                                return;
+                            }
+                        }
+                        else if (diff == 75){
+                            if(f<=1000&&f>100){
+                                result = syn;
+                                return;
+                            }
+                        }
+                        else if (diff == 100){
+                            if(f<=100){
+                                result = syn;
+                                return;
+                            }
+                        }
+                    }
+                } result = word;
+            }
+        });
+    }
+
+}
 
 var findAllSynonyms = function findAllSynonyms(str, difficulty){
     //regex to look for words, which are one or zero capital letters followed by multiple lowercase letters
@@ -137,3 +208,35 @@ var findSynonym = function findSynonym(str, difficulty){
 	})
     }
 };
+
+var replaceSelection = function replaceSelection(part){
+    var selection = window.getSelection();
+    var parent = selection.anchorNode;
+    var val = parent.nodeValue;
+    console.log(selection.toString());
+    getSyn(selection.toString(),part);
+    $(document).one("ajaxStop",function(){
+        console.log(selection.toString());
+        val = val.replace(selection.toString(),result);
+        parent.nodeValue = val;
+    });
+};
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    /*
+      Listens for a message from popup.js
+      Request is the message. It can be of any type.
+      Currently, request is a JSON object where mode is a string containing simplify or complicate.
+    */
+    if (request.scale == "page"){
+	replaceAll(request.part);
+    }
+    else if (request.scale == "selection"){
+	replaceSelection(request.part);
+    }
+    if(request.mode != undefined)
+        diff = request.mode;
+    //console.log(diff);
+    //console.log("running");
+});
+>>>>>>> ray
