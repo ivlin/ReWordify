@@ -21,23 +21,6 @@ var reverseDictionary = function reverseDictionary(dict){
     return reverse;
 };
 
-var replaceSelection = function replaceSelection(mode){
-    var selection = window.getSelection();
-    var parent = selection.anchorNode;
-    var val = parent.nodeValue;
-    if (mode == "simplify"){
-	findAllSynonyms(selection.toString(), 0);
-    }
-    else if(mode == "complicate"){
-	findAllSynonyms(selection.toString(), 100);
-    }
-    $(document).ajaxStop(function(){
-	if(!$.isEmptyObject(mapObj)){
-	    parent.nodeValue = replaceAll(val);
-	}
-    });
-};
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     /*
       Listens for a message from popup.js
@@ -113,7 +96,7 @@ var getSyn = function getSyn(word, p){
     else{
         $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
             if(data[p]==undefined){
-                //console.log(p);
+                console.log(p);
                 result = word;
             }
             else{
@@ -243,4 +226,3 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     //console.log(diff);
     //console.log("running");
 });
->>>>>>> ray
