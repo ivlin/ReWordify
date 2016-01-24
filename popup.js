@@ -5,6 +5,7 @@
 var sendInstructions = function sendInstructions(){
     var slider = document.getElementById("slider");
 	getActiveTab().then(function(tab){
+        console.log("works2");
 	    chrome.tabs.sendMessage(tab[0].id, {mode:slider.value});
 	});
 };
@@ -35,13 +36,15 @@ var UDL = function updateLabel(val) {
 
 slider.addEventListener('mouseup', function(){
     UDL(slider.value);
-    sendInstructions;
+    sendInstructions();
 })
 slider.addEventListener('mousedown', function(){
     UDL(slider.value);
-    sendInstructions;
+    sendInstructions();
 });
 slider.addEventListener('mousemove', function(){
     UDL(slider.value);
-    sendInstructions;
+    sendInstructions();
 });
+UDL(slider.value);
+sendInstructions();
