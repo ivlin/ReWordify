@@ -26,17 +26,15 @@ var replaceSelection = function replaceSelection(mode){
     var parent = selection.anchorNode;
     var val = parent.nodeValue;
     if (mode == "simplify"){
-	findAllSynonyms(val, 0);
+	findAllSynonyms(selection.toString(), 0);
     }
     else if(mode == "complicate"){
-	findAllSynonyms(val, 100);
+	findAllSynonyms(selection.toString(), 100);
     }
     $(document).ajaxStop(function(){
-	var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	val = val.replace(re, function(matched){
-	    return mapObj[matched];
-	});
-	parent.nodeValue = val;
+	if(!$.isEmptyObject(mapObj)){
+	    parent.nodeValue = replaceAll(val);
+	}
     });
 };
 
@@ -82,17 +80,22 @@ var walk = function walk(node, difficulty) {
     }
 };
 
+/*
+  @name: replaceAll
+  @author: Ben McCormick of StackOverflow
+*/
+var replaceAll = function replaceAll(str){
+    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+    return str.replace(re, function(matched){
+	return mapObj[matched];
+    });
+}
+
 var handleText = function handleText(node, difficulty){
     findAllSynonyms(node.nodeValue, difficulty);
     $(document).ajaxStop(function(){
 	if(!$.isEmptyObject(mapObj)){
-	    /*
-	      @author: Ben McCormick of StackOverflow
-	    */
-	    var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-	    node.nodeValue = node.nodeValue.replace(re, function(matched){
-		return mapObj[matched];
-	    });
+	    node.nodeValue = replaceAll(node.nodeValue);
 	}
     });
 };
@@ -107,7 +110,9 @@ var findAllSynonyms = function findAllSynonyms(str, difficulty){
     }
 
     for(i = 0; i < words.length; i++){
-	findSynonym(words[i], difficulty);
+	if(words[i].length > 2){
+	    findSynonym(words[i], difficulty);
+	}
     }
 };
 
