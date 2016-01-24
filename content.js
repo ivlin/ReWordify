@@ -65,7 +65,9 @@
 	findAllSynonyms(node.nodeValue, simplify);
 	$(document).ajaxStop(function(){
 	    if(!$.isEmptyObject(mapObj)){
-		console.log(mapObj);
+		/*
+		  @author: Ben McCormick of StackOverflow
+		*/
 		var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
 		node.nodeValue = node.nodeValue.replace(re, function(matched){
 		    return mapObj[matched];
@@ -74,15 +76,16 @@
 	});
     };
 
-    /*
-      @name: replaceAll
-      @author: Ben McCormick of StackOverflow
-    */
     var findAllSynonyms = function findAllSynonyms(str, simplify){
+	//regex to look for words, which are one or zero capital letters followed by multiple lowercase letters
+	//outputs an array of words
 	words = str.match(/[A-Z]?[a-z]+/g);
+	//if it finds none, no relacement is done
 	if(words == null){
 	    return str;
 	}
+
+	//empties out the dictionary
 	mapObj = {};
 	
 	for(i = 0; i < words.length; i++){
@@ -95,10 +98,13 @@
 	var found = false;
 	var data;
 	if(freq_list[word] == undefined || freq_list[word] < 1000){
+	    //ajax call to Big Huge Thesaurus
+	    ///The JSON object is divided into parts of speech, which each has an array of synonyms
 	    $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
 		for(var key in data){
 		    var synonyms = data[key]["syn"];
 		    for(var syn in synonyms){
+			//checks if the word is suitable for replacement and has not been found
 			if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 0 && !found){
 			    mapObj[str] = synonyms[syn];
 			    found = true;
