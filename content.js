@@ -65,6 +65,7 @@
 	findAllSynonyms(node.nodeValue, simplify);
 	$(document).ajaxStop(function(){
 	    if(!$.isEmptyObject(mapObj)){
+		console.log(mapObj);
 		var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
 		node.nodeValue = node.nodeValue.replace(re, function(matched){
 		    return mapObj[matched];
@@ -89,8 +90,8 @@
 	}
     };
 
-    var findSynonym = function findSynonym(word, simplify){
-	word = word.toLowerCase();
+    var findSynonym = function findSynonym(str, simplify){
+	word = str.toLowerCase();
 	var found = false;
 	var data;
 	if(freq_list[word] == undefined || freq_list[word] < 1000){
@@ -99,7 +100,7 @@
 		    var synonyms = data[key]["syn"];
 		    for(var syn in synonyms){
 			if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 0 && !found){
-			    mapObj[word] = synonyms[syn];
+			    mapObj[str] = synonyms[syn];
 			    found = true;
 			}
 		    }
