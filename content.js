@@ -62,10 +62,9 @@
     };
     
     var handleText = function handleText(node, simplify){
-	findSynonyms(node.nodeValue, simplify);
+	findAllSynonyms(node.nodeValue, simplify);
 	$(document).ajaxStop(function(){
 	    if(!$.isEmptyObject(mapObj)){
-		console.log(mapObj);
 		var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
 		node.nodeValue = node.nodeValue.replace(re, function(matched){
 		    return mapObj[matched];
@@ -78,31 +77,34 @@
       @name: replaceAll
       @author: Ben McCormick of StackOverflow
     */
-    var findSynonyms = function findSynonyms(str, simplify){
+    var findAllSynonyms = function findAllSynonyms(str, simplify){
 	words = str.match(/[A-Z]?[a-z]+/g);
 	if(words == null){
 	    return str;
 	}
-
 	mapObj = {};
 	
 	for(i = 0; i < words.length; i++){
-	    var word = words[i].toLowerCase();
-	    var found = false;
-	    var data;
-	    if(freq_list[word] == undefined || freq_list[word] < 1000){
-		$.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
-		    for(var key in data){
-			var synonyms = data[key]["syn"];
-			for(var syn in synonyms){
-			    if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 0){
-				mapObj[word] = synonyms[syn];
-				found = true;
-			    }
+	    findSynonym(words[i], simplify);
+	}
+    };
+
+    var findSynonym = function findSynonym(word, simplify){
+	word = word.toLowerCase();
+	var found = false;
+	var data;
+	if(freq_list[word] == undefined || freq_list[word] < 1000){
+	    $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
+		for(var key in data){
+		    var synonyms = data[key]["syn"];
+		    for(var syn in synonyms){
+			if(freq_list[synonyms[syn]] != undefined && freq_list[synonyms[syn]] > 0 && !found){
+			    mapObj[word] = synonyms[syn];
+			    found = true;
 			}
 		    }
-		})
-	    }
+		}
+	    })
 	}
     };
 })();
