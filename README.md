@@ -1,7 +1,7 @@
-# ReWordify
+# ReWrite
 
-Ever have trouble reading articles with hard words? How about trying to sound smart? No need to worry; we have the solution. Introducing Rewordify!  Rewordify will help u with your word dilemmas.
-No longer will you sound <strike>dumb</strike> inarticulate, no <strike>articles</strike> treatise will ever be <strike>too hard to read</strike> hieroglyphic. Rewordify!
+Ever have trouble reading articles with hard words? How about trying to sound smart? No need to worry; we have the solution. Introducing Rewrite! Rewrite will help u with your word dilemmas.
+No longer will you sound <strike>dumb</strike> inarticulate, no <strike>articles</strike> treatise will ever be <strike>too hard to read</strike> hieroglyphic. Rewrite!
 
 
 #Members
