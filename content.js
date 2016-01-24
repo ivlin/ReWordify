@@ -107,9 +107,7 @@ var result;
 var getSyn = function getSyn(word, p){
     /*takes a word and part of speech and returns a synonym corresponding to it*/
     str = word.toLowerCase();
-    if(freq_list[str] == undefined){
-        console.log(JSON.stringify(str));
-        console.log(freq_list[str]);
+    if(freq_list[str] == undefined ){
         result = word;
     }
     else{
@@ -162,6 +160,12 @@ var getSyn = function getSyn(word, p){
                                 result = syn;
                                 return;
                             }
+                        }
+                    }
+                    else{
+                        if (Math.random()*5==0){
+                            result = syn;
+                            return;
                         }
                     }
                 } result = word;
