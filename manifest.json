@@ -11,12 +11,33 @@
 	"default_icon": "icon.png"
     },
 
+    "background": {
+	"scripts": ["eventPage.js"],
+	"persistent": false
+    },
+
     "icons": {
+	"16": "icon.png",
 	"128": "icon.png"
     },
+
+    "content_scripts": [
+	{
+	    "matches":["<all_urls>"],
+	    "js":["jquery.js","content.js"]
+	}
+    ],
     
     "permissions": [
+	"contextMenus",
 	"activeTab"
+    ],
+
+    "content_scripts": [
+        {
+            "matches":["<all_urls>"],
+            "js":["jquery.js","content.js"]
+        }
     ],
 
     "web_accessible_resources": [
