@@ -97,13 +97,13 @@ var getSyn = function getSyn(word, p){
                     console.log(word);
                     if(f!=undefined){
                         if (diff == 0){
-                            if(f>10000&&Math.Random()*10<3){
+                            if(f>10000&&Math.random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
                         else if (diff == 25){
-                            if(f<=10000&&f>5000&&Math.Random()*10<3){
+                            if(f<=10000&&f>5000&&Math.random()*10<3){
                                 result = syn;
                                 return;
                             }
@@ -111,18 +111,18 @@ var getSyn = function getSyn(word, p){
                         else if (diff == 50){
                             console.log(f);
                             console.log(syn);
-                            if(f<=5000&&f>1000&&Math.Random()*10<3){
+                            if(f<=5000&&f>1000&&Math.random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
                         else if (diff == 75){
-                            if(f<=1000&&f>100&&Math.Random()*10<3){
+                            if(f<=1000&&f>100&&Math.random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
-                        else if (diff == 100&&Math.Random()*10<3){
+                        else if (diff == 100&&Math.random()*10<3){
                             if(f<=100){
                                 result = syn;
                                 return;
