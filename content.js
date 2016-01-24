@@ -152,10 +152,10 @@ var getSynHelper = function getSynHelper(dict, type){
     //takes the dictionary containing word types as keys and returns a word based on matching difficulty
     var synonyms = dict[type];
     for(var syn in synonyms){
-        var f = freq_list[synonyms[syn]];
+        var f = freq_list[synonyms[syn]];/*
         //console.log helps to see what words will work during testing
         console.log("Possible Word: "+synonyms[syn]);
-        console.log("Frequency: "+f);
+        console.log("Frequency: "+f);*/
         syn=synonyms[syn];
         if(f!=undefined){//if the word is in the frequency list
             if (diff == 0){
@@ -213,7 +213,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         part is a string containing either "Noun" "Verb" "Adjective" or "Adverb"
         */
     if (request.scale == "page")
-        replaceAll(request.part);
+	walk(document.body, parseInt(request.mode));
     else if (request.scale == "selection")//if a selection replacement is requested, perform the corresponding function
         replaceSelection(request.part);
     
