@@ -17,8 +17,7 @@ var getActiveTab = function getActiveTab(){
     });
 };
 
-document.getElementById("submit").addEventListener("click", sendInstructions);
-
+var slider = document.getElementById("slider");
 
 var UDL = function updateLabel(val) {
     var label = document.getElementById("sliderLabel");
@@ -34,13 +33,15 @@ var UDL = function updateLabel(val) {
 	label.innerHTML = "Very Hard";
 }
 
-var slider = document.getElementById("slider");
-
+slider.addEventListener('mouseup', function(){
+    UDL(slider.value);
+    sendInstructions;
+})
 slider.addEventListener('mousedown', function(){
     UDL(slider.value);
+    sendInstructions;
 });
 slider.addEventListener('mousemove', function(){
     UDL(slider.value);
+    sendInstructions;
 });
-
-var button = document.getElementById("submit");

@@ -19,6 +19,9 @@ var checkhard = function(word){
     return freq_list[word] < 1000;	
 }
 
+//API key for Big Huge Thesaurus
+var api_key = "e4383d803d79b55ef72d1a68e85d075d";
+
 //credit to http://is.gd/mwZp7E
 //TJ Crowder at StackOverflow
 var walk = function walk(node, reference) {
@@ -83,15 +86,61 @@ var simpleToHard = function simpleToHard(){
     return {"GUI":"well"};
 };
 
+var diff;
+
+var getSyn = function getSyn(word, p){
+    /*takes a word and part of speech and returns a synonym corresponding to it*/
+    str = word.toLowerCase();
+    if(freq_list[str] == undefined){
+        console.log(JSON.stringify(str));
+        console.log(freq_list[str]);
+        return word;
+    }
+    else{
+        console.log("works");
+        $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
+            if(data[p]==undefined)
+                return word;
+            else{
+                var synonyms = data[p]["syn"];
+                for(var syn in synonyms){
+                    var f = freq_list[syn];
+                    console.log(f);
+                    if (diff == 0){
+                        if(f>10000)
+                            return syn;
+                    }
+                    else if (diff == 25){
+                        if(f<=10000&&f>5000)
+                            return syn;
+                    }
+                    else if (diff == 50){
+                        if(f<=5000&&f>1000)
+                            return syn;
+                    }
+                    else if (diff == 75){
+                        if(f<=1000&&f>100)
+                            return syn;
+                    }
+                    else if (diff == 100){
+                        if(f<=100)
+                            return syn;
+                    }
+                    return word;
+                }
+            }
+        });
+    }
+
+}
+
 var replaceSelection = function replaceSelection(mode){
     var selection = window.getSelection();
     var parent = selection.anchorNode;
     var val = parent.nodeValue;
-    if (mode == "simplify"){
-	val = val.replace(selection,"THIS IS FOR SIMPLETONS");
-    }
-    else if(mode == "complicate"){
-	val = val.replace(selection,"THIS IS FOR INTEMELLECTUAL PPL");
+    console.log(val);
+    if (getSyn(val,mode)!=val){
+        val = val.replace(selection,getSyn(val,mode));
     }
     parent.nodeValue = val;
 };
@@ -108,4 +157,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     else if (request.scale == "selection"){
 	replaceSelection(request.mode);
     }
+
+    diff = request.mode;
+
 });
