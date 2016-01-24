@@ -21,36 +21,6 @@ var reverseDictionary = function reverseDictionary(dict){
     return reverse;
 };
 
-var replaceSelection = function replaceSelection(mode){
-    var selection = window.getSelection();
-    var parent = selection.anchorNode;
-    var val = parent.nodeValue;
-    if (mode == "simplify"){
-	findAllSynonyms(selection.toString(), 0);
-    }
-    else if(mode == "complicate"){
-	findAllSynonyms(selection.toString(), 100);
-    }
-    $(document).ajaxStop(function(){
-	if(!$.isEmptyObject(mapObj)){
-	    parent.nodeValue = replaceAll(val);
-	}
-    });
-};
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    /*
-      Listens for a message from popup.js
-      Request is the message. It can be of any type.
-      Currently, request is a JSON object where mode is a string containing simplify or complicate.
-    */
-    if(request.scale == "page"){
-	walk(document.body, parseInt(request.mode));
-    }
-    else if(request.scale == "selection"){
-	replaceSelection(request.mode);
-    }
-});
 
 //Thesaurus API stuff
 //var api_key = "e4383d803d79b55ef72d1a68e85d075d";
@@ -107,15 +77,10 @@ var result;
 var getSyn = function getSyn(word, p){
     /*takes a word and part of speech and returns a synonym corresponding to it*/
     str = word.toLowerCase();
-    if(freq_list[str] == undefined){
-        console.log(JSON.stringify(str));
-        console.log(freq_list[str]);
-        result = word;
-    }
-    else{
+    result=word;
         $.getJSON("https://words.bighugelabs.com/api/2/" + api_key + "/" + word + "/json", function(data){
             if(data[p]==undefined){
-                //console.log(p);
+                console.log(p);
                 result = word;
             }
             else{
@@ -132,13 +97,13 @@ var getSyn = function getSyn(word, p){
                     console.log(word);
                     if(f!=undefined){
                         if (diff == 0){
-                            if(f>10000){
+                            if(f>10000&&Math.Random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
                         else if (diff == 25){
-                            if(f<=10000&&f>5000){
+                            if(f<=10000&&f>5000&&Math.Random()*10<3){
                                 result = syn;
                                 return;
                             }
@@ -146,28 +111,33 @@ var getSyn = function getSyn(word, p){
                         else if (diff == 50){
                             console.log(f);
                             console.log(syn);
-                            if(f<=5000&&f>1000){
+                            if(f<=5000&&f>1000&&Math.Random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
                         else if (diff == 75){
-                            if(f<=1000&&f>100){
+                            if(f<=1000&&f>100&&Math.Random()*10<3){
                                 result = syn;
                                 return;
                             }
                         }
-                        else if (diff == 100){
+                        else if (diff == 100&&Math.Random()*10<3){
                             if(f<=100){
                                 result = syn;
                                 return;
                             }
                         }
                     }
+                    else{
+                        if (Math.random()*10<3){
+                            result = syn;
+                            return;
+                        }
+                    }
                 } result = word;
             }
-        });
-    }
+        })
 
 }
 
@@ -213,10 +183,10 @@ var replaceSelection = function replaceSelection(part){
     var selection = window.getSelection();
     var parent = selection.anchorNode;
     var val = parent.nodeValue;
+    //var temp = selection.toString();
     console.log(selection.toString());
     getSyn(selection.toString(),part);
     $(document).one("ajaxStop",function(){
-        console.log(selection.toString());
         val = val.replace(selection.toString(),result);
         parent.nodeValue = val;
     });
@@ -239,4 +209,3 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     //console.log(diff);
     //console.log("running");
 });
->>>>>>> ray
