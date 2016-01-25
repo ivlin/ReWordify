@@ -13,8 +13,8 @@ $.ajax({
 });
 
 //Thesaurus API stuff
-var api_key = "e4383d803d79b55ef72d1a68e85d075d";
-//var api_key = "0d5eb6972f22a57bb1b4f4434c0f32a2";
+//var api_key = "e4383d803d79b55ef72d1a68e85d075d";
+var api_key = "0d5eb6972f22a57bb1b4f4434c0f32a2";
 
 var mapObj = {};
 
@@ -142,34 +142,33 @@ var getSynHelper = function getSynHelper(dict, type){
         syn=synonyms[syn];
         if(f!=undefined){//if the word is in the frequency list
             if (diff == 0){
-                if(f>40000&&Math.random()*10<3){//definition of Very Easy
+                if(f>40000){//definition of Very Easy
                     return syn;
                 }
             }
             else if (diff == 25){
-                if(f<=40000&&f>30000&&Math.random()*10<3){//definition of Easy
+                if(f<=40000&&f>30000){//definition of Easy
                     return syn;
                 }
             }
             else if (diff == 50){
-                if(f<=30000&&f>20000&&Math.random()*10<3){//definition of Regular
+                if(f<=30000&&f>20000){//definition of Regular
                     return syn;
                 }
             }
             else if (diff == 75){
-                if(f<=20000&&f>10000&&Math.random()*10<3){//definition of Hard
+                if(f<=20000&&f>10000){//definition of Hard
                     return syn;
                 }
             }
             else if (diff == 100){
-                if(f<=10000&&Math.random()*10<3){//definition of Very Hard
+                if(f<=10000){//definition of Very Hard
                     return syn;
                 }
             }
         }
         else{
-            if (Math.random()*10<2){//has a chance of word being used if not on freq list
-                return syn;
+            return syn;
             }
         }
     }
