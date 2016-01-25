@@ -23,8 +23,8 @@ var reverseDictionary = function reverseDictionary(dict){
 
 
 //Thesaurus API stuff
-//var api_key = "e4383d803d79b55ef72d1a68e85d075d";
-var api_key = "0d5eb6972f22a57bb1b4f4434c0f32a2";
+var api_key = "e4383d803d79b55ef72d1a68e85d075d";
+//var api_key = "0d5eb6972f22a57bb1b4f4434c0f32a2";
 
 
 var mapObj = {};

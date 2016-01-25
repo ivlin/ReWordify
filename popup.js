@@ -9,6 +9,13 @@
         chrome.tabs.sendMessage(tab[0].id, {scale:"page",mode:slider.value});
     });
 };
+var sendInstructions2 = function sendInstructions2(){
+    var slider = document.getElementById("slider");
+    getActiveTab().then(function(tab){
+     //   console.log("works2");
+        chrome.tabs.sendMessage(tab[0].id, {mode:slider.value});
+    });
+};
 
 var getActiveTab = function getActiveTab(){
     return new Promise(function(resolve,reject){
@@ -37,16 +44,16 @@ var UDL = function updateLabel(val) {//changes label on slider
 //various event listeners to change the label on the slider and send messages
 slider.addEventListener('mouseup', function(){
     UDL(slider.value);
-//    sendInstructions();
+    sendInstructions2();
 })
 slider.addEventListener('mousedown', function(){
     UDL(slider.value);
-//    sendInstructions();
+    sendInstructions2();
 });
 slider.addEventListener('mousemove', function(){
     UDL(slider.value);
-//    sendInstructions();
+    sendInstructions2();
 });
 UDL(slider.value);
-//sendInstructions();
+sendInstructions2();
 document.getElementById("submit").addEventListener("click",sendInstructions);
