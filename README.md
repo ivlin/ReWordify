@@ -2,16 +2,17 @@
 
 Ever have trouble reading articles with hard words? How about trying to sound smart? No need to worry; we have the solution. Introducing Rewrite! Rewrite is a chrome extension that will help u with your word dilemmas.
 No longer will you sound <strike>dumb</strike> inarticulate, no <strike>articles</strike> treatise will ever be <strike>too hard to read</strike> hieroglyphic. Rewrite!
+
 YouTube Video:https://www.youtube.com/watch?v=W9LdAQsK4UU
 
 Uses include:
--Finally figuring out what that one friend is talking about!
--Not having to use a dictionary while reading an article online!
--Having a simple-wikipedia like tool a ones fingertips!
--Understanding SAT words!
--Making yourself harder to understand!
--Sounding Smarter!
--Returning a compliment with synonyms instead of just saying "you too!"
+- Finally figuring out what that one friend is talking about!
+- Not having to use a dictionary while reading an article online!
+- Having a simple-wikipedia like tool a ones fingertips!
+- Understanding SAT words!
+- Making yourself harder to understand!
+- Sounding Smarter!
+- Returning a compliment with synonyms instead of just saying "you too!"
 
 #Members
 <table>
