@@ -23,7 +23,7 @@
 
     "content_scripts": [
 	{
-	    "matches":["<all_urls>"],
+	    "matches":["<all_urls>", "file://*/*"],
 	    "js":["jquery.js","content.js"]
 	}
     ],

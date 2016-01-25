@@ -38,14 +38,20 @@ Uses include:
 </table>
 
 #Instructions
-The difficulty is not for the original words that you want to replace, but rather for the words that they are going to be replaced with.
-The difficulty of the original words has nothing to do with the slider.
-
 1. Press the button for the chrome extension and choose a diffulty
 2. Click the screen so the slider disappears
 3. Highlight the word that you want to replace and right click
+   The difficulty sets the difficulty of the words that will replace the original words.
+   The difficulty of the original words has nothing to do with the slider.
 4. Select the part of speech that the word belongs to
 5. voilà, REWRITE!
+
+Alternatively:
+1. Press the button for the chrome extension and choose a diffulty
+   Words that are more difficult than the set difficulty will be replaced by simpler words
+   if found. This will affect the entire page.
+2. Press the "Simplify Everything" button.
+3. voilà, REWRITE!
 
 #Tools Used
 Javascript
@@ -53,7 +59,7 @@ JQuery
 Html5
 
 #Plans for the Future
-- Paragraph and Page converting coming soon! (We are currently limited by Big Huge Thesaurus's API limit of 100 words per day)
+- Paragraph selection converting coming soon! (We are currently limited by Big Huge Thesaurus's API limit of 1000 words per day)
 - Better Grammar Check!
 - Prettier Slider!
 - More Code!
