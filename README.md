@@ -29,8 +29,8 @@ No longer will you sound <strike>dumb</strike> inarticulate, no <strike>articles
 
 #Instructions
 1. Press the button for the chrome extension and choose a diffulty
-3. Click the screen so the slider disappears
-4. Highlight the word that you want to replace and right click
-5. Select the part of speech that the word belongs to
-6. voilà, REWRITE!
-7. The submit button is for changing the whole text to a certain difficulty, do not press unless you want to change the whole text
+2. Click the screen so the slider disappears
+3. Highlight the word that you want to replace and right click
+4. Select the part of speech that the word belongs to
+5. voilà, REWRITE!
+6. The submit button is for changing the whole text to a certain difficulty, do not press unless you want to change the whole text
