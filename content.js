@@ -169,7 +169,6 @@ var getSynHelper = function getSynHelper(dict, type){
         }
         else{
             return syn;
-            }
         }
     }
 }
