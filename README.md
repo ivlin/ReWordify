@@ -47,7 +47,7 @@ Uses include:
 5. voilà, REWRITE!
 
 Alternatively:<br>
-1. Press the button for the chrome extension and choose a diffulty
+1. Press the button for the chrome extension and choose a difficulty.
    Words that are more difficult than the set difficulty will be replaced by simpler words
    if found. This will affect the entire page.<br>
 2. Press the "Simplify Everything" button.<br>
