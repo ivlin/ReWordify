@@ -53,5 +53,8 @@ JQuery
 Html5
 
 #Plans for the Future
-Paragraph and Page converting coming soon! (We are currently limited by Big Huge Thesaurus's API limit of 100 words per day)
-Better Grammar Check!
+- Paragraph and Page converting coming soon! (We are currently limited by Big Huge Thesaurus's API limit of 100 words per day)
+- Better Grammar Check!
+- Prettier Slider!
+- More Code!
+- Better sources!
