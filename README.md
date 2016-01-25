@@ -46,11 +46,11 @@ Uses include:
 4. Select the part of speech that the word belongs to
 5. voilà, REWRITE!
 
-Alternatively:
-1. Press the button for the chrome extension and choose a diffulty
+Alternatively:<br>
+1. Press the button for the chrome extension and choose a difficulty.
    Words that are more difficult than the set difficulty will be replaced by simpler words
-   if found. This will affect the entire page.
-2. Press the "Simplify Everything" button.
+   if found. This will affect the entire page.<br>
+2. Press the "Simplify Everything" button.<br>
 3. voilà, REWRITE!
 
 #Tools Used
