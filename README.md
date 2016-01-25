@@ -28,6 +28,9 @@ No longer will you sound <strike>dumb</strike> inarticulate, no <strike>articles
 </table>
 
 #Instructions
+The difficulty is not for the original words that you want to replace, but rather for the words that they are going to be replaced with.
+The difficulty of the original words has nothing to do with the slider.
+
 1. Press the button for the chrome extension and choose a diffulty
 2. Click the screen so the slider disappears
 3. Highlight the word that you want to replace and right click
