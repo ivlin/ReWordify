@@ -36,4 +36,7 @@ The difficulty of the original words has nothing to do with the slider.
 3. Highlight the word that you want to replace and right click
 4. Select the part of speech that the word belongs to
 5. voilà, REWRITE!
-6. The submit button is for changing the whole text to a certain difficulty, do not press unless you want to change the whole text
+
+Paragraph and Page converting coming soon! (We are currently limited by Big Huge Thesaurus's API limit of 100 words per day)
+YouTube link: https://www.youtube.com/watch?v=W9LdAQsK4UU
+
